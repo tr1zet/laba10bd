@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title><%= article.title %> | Научный журнал</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { 
+            max-width: 1000px; 
+            margin: auto; 
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link:hover { text-decoration: underline; }
+        h1 { color: #333; border-left: 5px solid #667eea; padding-left: 20px; margin-top: 0; }
+        .meta-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .meta-info p { margin: 8px 0; }
+        .meta-info i { width: 25px; color: #667eea; }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+        .tag {
+            background: #e2e8f0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #4a5568;
+        }
+        .content {
+            background: #ffffff;
+            padding: 25px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            margin: 25px 0;
+            line-height: 1.6;
+        }
+        .reviews {
+            margin-top: 30px;
+        }
+        .review {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+        .review h4 { margin: 0 0 5px 0; color: #4a5568; }
+        .review .rating { color: #ecc94b; font-size: 14px; margin-left: 10px; }
+        .review .text { margin: 10px 0 0 0; color: #718096; }
+        .btn-back {
+            background-color: #667eea;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .btn-back:hover { background-color: #5a67d8; }
+        hr { margin: 30px 0; border-color: #e0e0e0; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> На главную</a>
+    
+    <h1><i class="fas fa-file-alt"></i> <%= article.title %></h1>
+    
+    <div class="meta-info">
+        <p><i class="fas fa-users"></i> <strong>Авторы:</strong> <%= article.authors.join(', ') %></p>
+        <p><i class="fas fa-calendar-day"></i> <strong>Дата публикации:</strong> <%= formattedDate %></p>
+        <p><i class="fas fa-star"></i> <strong>Средний рейтинг:</strong> 
+            <% if(avgRating !== 'Нет оценок') { %>
+                <i class="fas fa-star" style="color: #ecc94b;"></i> <%= avgRating %> / 10
+            <% } else { %>
+                <%= avgRating %>
+            <% } %>
+        </p>
+        <p><i class="fas fa-comments"></i> <strong>Количество рецензий:</strong> <%= reviewsCount %></p>
+        <div class="tags">
+            <i class="fas fa-tags"></i> <strong>Теги:</strong>
+            <% article.tags.forEach(tag => { %>
+                <span class="tag"><%= tag %></span>
+            <% }); %>
+        </div>
+    </div>
+    
+    <h3><i class="fas fa-align-left"></i> Содержание статьи</h3>
+    <div class="content">
+        <p><%= article.content %></p>
+    </div>
+    
+    <div class="reviews">
+        <h3><i class="fas fa-comment-dots"></i> Рецензии пользователей</h3>
+        <% if(article.reviews && article.reviews.length > 0) { %>
+            <% article.reviews.forEach(review => { %>
+                <div class="review">
+                    <h4><i class="fas fa-user-circle"></i> <%= review.name %>
+                        <span class="rating">
+                            <% for(let i = 1; i <= 10; i++) { %>
+                                <% if(i <= review.rating) { %>
+                                    <i class="fas fa-star" style="color: #ecc94b;"></i>
+                                <% } else { %>
+                                    <i class="far fa-star" style="color: #ecc94b;"></i>
+                                <% } %>
+                            <% } %>
+                            (<%= review.rating %>/10)
+                        </span>
+                    </h4>
+                    <p class="text"><%= review.text %></p>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p style="color: #999;"><i class="fas fa-comment-slash"></i> К этой статье пока нет рецензий.</p>
+        <% } %>
+    </div>
+    
+    <hr>
+    <a href="/" class="btn-back"><i class="fas fa-home"></i> Вернуться на главную</a>
+</div>
+</body>
+</html>
