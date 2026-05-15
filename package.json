@@ -1,0 +1,20 @@
+{
+  "name": "lab10-mongo",
+  "version": "1.0.0",
+  "description": "Laboratory work 10: MongoDB + Node.js (articles with full CRUD and analytics)",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "init": "node init.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.22.2",
+    "method-override": "^3.0.0",
+    "mongodb": "^6.21.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
